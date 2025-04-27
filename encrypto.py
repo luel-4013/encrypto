@@ -6,15 +6,31 @@ import hashlib
 
 def choice1():
 	print("			WARNING:- You MUST keep your keys SAFE. If not you WON't be able to get your files back!!\n")
-	print("Please select key options:\n1.Generate new keys.\n2.Use existing keys")
+	print("Please select encryption type to use :\n1.Elliptic Curve.\n2.RSA")
+	keyoption = input()
+	if keyoption == '1':
+		curvy()
+	elif keyoption == '2':
+		rsa()
+	else:
+		print('r u nuts????')
+		choice1()
+def curvy():
+	print('Elliptic Curve Algorithm Selected')
+	choice2()
+def rsa():
+	print('RSA cryptography selected 4096 will be used by default.')
+	choice2()
+def choice2():
+	print('Please select key options:\n1.Generate new keys.\n2.Use existing keys')
 	keyoption = input()
 	if keyoption == '1':
 		gen_new_key()
 	elif keyoption == '2':
 		use_exst_key()
 	else:
-		print('r u nuts????')
-		choice1()
+		print('r u nuts???')
+		choice2()
 
 def gen_new_key():
 	print("New keys will be used")
