@@ -4,6 +4,27 @@ from sys import exit
 from cryptography.fernet import Fernet
 import hashlib
 
+def fstthgs1st():
+	print('This program is protected by SECURE EXECUTION')
+	vald = input()
+	if vald == 'pasfrase':
+		print('Verification successful!!')
+		choice1()
+	elif vald == 'f':
+		fstauth()
+	else:
+		print('Verification failed!!')
+		sys.exit()
+def fstauth():
+	cfile = 'reaper.cxy'
+	check_file = path.isfile(cfile)
+	compute_hash = hashlib.sha512(open(cfile, 'rb').read()).hexdigest()
+	if compute_hash == '43d32486552ae307f4878dda2118715985489f5848e23e16eefcf1423147bc20d71151901fbb76222142845e873ab69f772f7c8a3e4144b3be8cfd08d07c71c6':
+		print('File Verification sucessfull!!')
+		choice1()
+	else:
+		print('Verification failed!!')
+		sys.exit()
 def choice1():
 	print("			WARNING:- You MUST keep your keys SAFE. If not you WON't be able to get your files back!!\n")
 	print("Please select encryption type to use :\n1.Elliptic Curve.\n2.RSA")
@@ -53,4 +74,5 @@ def real_choice():
 	else:
 		print('u r definitely nuts!!!')
 		real_choice()
-choice1()
+fstthgs1st()
+#fstauth()
