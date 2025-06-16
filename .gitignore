@@ -177,3 +177,7 @@ cython_debug/
 lulu.zizi
 dont.me
 reaper.cxy
+private_key.pem
+public_key.pem
+piblic_key.pub
+
