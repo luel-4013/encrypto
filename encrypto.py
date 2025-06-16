@@ -2,7 +2,7 @@ from os import sys,path,listdir
 from os.path import isfile, join
 from sys import exit
 from cryptography.fernet import Fernet
-import hashlib
+import hashlib,subprocess
 
 def fstthgs1st():
 	print('This program is protected by SECURE EXECUTION')
@@ -52,7 +52,6 @@ def choice2():
 	else:
 		print('r u nuts???')
 		choice2()
-#test comment
 def gen_new_key():
 	print("New keys will be used")
 	real_choice()
@@ -74,5 +73,23 @@ def real_choice():
 	else:
 		print('u r definitely nuts!!!')
 		real_choice()
-fstthgs1st()
+
+def get_machine_id():
+    if sys.platform == "linux":
+        print("Linux OS detected!") 
+        command = "cat /etc/machine-id"
+    elif sys.platform == "win32":
+        print("Windows OS detected!")   
+        command = "wmic csproduct get UUID"
+    elif sys.platform == "darwin":
+        print("macOS detected!")
+        command = "system_profiler SPHardwareDataType | grep 'Hardware UUID'"
+    else:
+        raise Exception("Unsupported platform")
+    result = subprocess.check_output(command, shell=True).decode()
+    machine_id = result.split("\n")[-2].strip()
+    print(f"Machine ID/UUID: {machine_id}")
+
+get_machine_id()
+#fstthgs1st()
 #fstauth()
