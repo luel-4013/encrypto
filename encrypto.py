@@ -52,7 +52,7 @@ def choice2():
 	else:
 		print('r u nuts???')
 		choice2()
-
+#test comment
 def gen_new_key():
 	print("New keys will be used")
 	real_choice()
