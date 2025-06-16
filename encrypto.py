@@ -33,8 +33,8 @@ def fstauth(machine_id):
                         sys.exit()
 
 def choice1():
-	print("			WARNING:- You MUST keep your keys SAFE. If not you WON't be able to get your files back!!\n")
-	print("Please select encryption type to use :\n1.Elliptic Curve\n2.RSA")
+	print("			WARNING:- You MUST keep your keys SAFE. If not you WON'T be able to get your files back!!\n")
+	print("[#]Please select encryption type to use :\n1.Elliptic Curve\n2.RSA")
 	keyoption = input()
 	if keyoption == '1':
 		curvy()
@@ -50,10 +50,10 @@ def rsaal():
 	print('[+]RSA cryptography selected 4096 will be used by default.')
 	choice2rsa()
 def choice2rsa():
-    print('Please select key options:\n1.Generate new keys.\n2.Use existing keys')
+    print('[#]Please select key options:\n1.Generate new keys\n2.Use existing keys')
     keyoption = input()
     
-    if keyoption == '1':  # Corrected indentation
+    if keyoption == '1':
         gen_new_keyrsa()
     elif keyoption == '2':
         use_exst_keytrsa()
@@ -61,10 +61,10 @@ def choice2rsa():
         print('[-]r u nuts???')
         choice1()
 def choice2el():
-    print('Please select key options:\n1.Generate new keys.\n2.Use existing keys')
+    print('[$]Please select key options:\n1.Generate new keys\n2.Use existing keys')
     keyoption = input()
     
-    if keyoption == '1':  # Correct indentation (aligned with the previous lines)
+    if keyoption == '1':
         gen_new_keyel()
     elif keyoption == '2':
         use_exst_keyel()
@@ -72,22 +72,16 @@ def choice2el():
         print('[-]r u nuts???')
         choice1()
 def verify_key_pair(private_key, public_key):
-    # Data to encrypt and verify
     message = b"Verify this message"
-
-    # Encrypt with public key
     ciphertext = public_key.encrypt(
         message,
         PKCS1v15()
     )
-
-    # Decrypt with private key
     try:
         decrypted_message = private_key.decrypt(
             ciphertext,
             PKCS1v15()
         )
-        # Verify that the decrypted message matches the original message
         if decrypted_message == message:
             print("Key pair verified successfully!")
             return True
@@ -100,50 +94,39 @@ def verify_key_pair(private_key, public_key):
 
 def gen_new_keyrsa():
     print("[+] New keys will be used")
-    # Check if the private key file already exists
     if os.path.exists("private_key.pem"):
         confirm = input("[!] Private key already exists. Are you sure you want to OVERWRITE? "
                         "\n[!] You won't get your files back encrypted by the existing key (y/n)? ")
         if confirm.lower() != 'y':
             print('[+] Key generation aborted')
             return
-    # Generate RSA key pair (4096 bits)
     private_key = rsa.generate_private_key(
         public_exponent=65537,
         key_size=4096
     )
     public_key = private_key.public_key()
-    # Verify key pair
     if verify_key_pair(private_key, public_key):
-        print("RSA key pair is valid.")
+        print("[+]RSA key pair compatibility verified successfully!")
     else:
-        print("RSA key pair is invalid.")
+        print("[-]RSA key pair compatibility verification failed!.")
         return
-
-    # Export private key to file (PEM format)
     private_pem = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.PKCS8,
-        encryption_algorithm=serialization.NoEncryption()  # No password encryption
+        encryption_algorithm=serialization.NoEncryption()
     )
-    
-    # Write the private key to file
     with open("private_key.pem", "wb") as private_file:
         private_file.write(private_pem)
         if os.name != 'nt':  # If not Windows
-            os.chmod("private_key.pem", 0o600)  # Secure file permissions
-        print("Private key saved to private_key.pem")
-
-    # Export public key to file (PEM format)
+            os.chmod("private_key.pem", 0o600)
+        print("[+]Private key saved to private_key.pem")
     public_pem = public_key.public_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
     )
-    
-    # Write the public key to file
-    with open("public_key.pem", "wb") as public_file:
+    with open("public_key.pub", "wb") as public_file:
         public_file.write(public_pem)
-        print("Public key saved to public_key.pem")
+        print("[+]Public key saved to public_key.pub")
 
 def use_exst_keyrsa():
 	print('[+]Existing keys will be used')
@@ -186,3 +169,4 @@ def get_machine_id():
     return machine_id
 machine_id = get_machine_id()
 fstauth(machine_id)
+
