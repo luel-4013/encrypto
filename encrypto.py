@@ -83,13 +83,13 @@ def verify_key_pair(private_key, public_key):
             PKCS1v15()
         )
         if decrypted_message == message:
-            print("Key pair verified successfully!")
+            print("[+]RSA key pair compatibility verified successfully!")
             return True
         else:
-            print("Decryption failed: message mismatch.")
+            print("[-]Decryption failed: please regenerate key.")
             return False
     except Exception as e:
-        print(f"An error occurred during decryption: {e}")
+        print(f"[-]An error occurred during decryption: {e}")
         return False
 
 def gen_new_keyrsa():
@@ -106,9 +106,9 @@ def gen_new_keyrsa():
     )
     public_key = private_key.public_key()
     if verify_key_pair(private_key, public_key):
-        print("[+]RSA key pair compatibility verified successfully!")
+        print("[+]RSA key pair valid.")
     else:
-        print("[-]RSA key pair compatibility verification failed!.")
+        print("[-]RSA key pair invalid.")
         return
     private_pem = private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
